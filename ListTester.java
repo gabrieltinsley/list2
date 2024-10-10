@@ -150,6 +150,7 @@ public class ListTester {
 		testSingleElementList(emptyList_addA_A, "emptyList_addA_A", LIST_A, STRING_A);
 		testSingleElementList(emptyList_addAtIndexZero_A, "emptyList_addAtIndexZero_A", LIST_A, STRING_A);
 		//1-element to empty list
+		testEmptyList(A_removeFirst_emptyList, "A_removeFirst_emptyList");
 		//1-element to 2-element
 		testTwoElementList(A_addToFrontB_BA, "A_addToFrontB_BA", LIST_BA, STRING_BA);
 		//1-element to changed 1-element via set()
@@ -259,6 +260,16 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> A_addToFrontB_BA = () -> A_addToFrontB_BA();
+
+	/** Scenario: [A] -> removeFirst() -> [] 
+	 * @return [] after removeFirst()
+	 */
+	private IndexedUnsortedList<Integer> A_removeFirst_emptyList() {
+		IndexedUnsortedList<Integer> list = emptyList_addToFrontA_A(); 
+		list.removeFirst();
+		return list;
+	}
+	private Scenario<Integer> A_removeFirst_emptyList = () -> A_removeFirst_emptyList();
 
 	/////////////////////////////////
 	//XXX Tests for 0-element list
