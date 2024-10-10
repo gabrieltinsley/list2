@@ -139,8 +139,12 @@ public class ListTester {
 		//Possible list contents after a scenario has been set up
 		Integer[] LIST_A = {ELEMENT_A};
 		String STRING_A = "A";
+		Integer[] LIST_B = {ELEMENT_B};
+		String STRING_B = "B";
 		Integer[] LIST_BA = {ELEMENT_B, ELEMENT_A};
 		String STRING_BA = "BA";
+		Integer[] LIST_AB = {ELEMENT_A, ELEMENT_B};
+		String STRING_AB = "AB";
 
 		//newly constructed empty list
 		testEmptyList(newList, "newList");
@@ -153,7 +157,9 @@ public class ListTester {
 		testEmptyList(A_removeFirst_emptyList, "A_removeFirst_emptyList");
 		//1-element to 2-element
 		testTwoElementList(A_addToFrontB_BA, "A_addToFrontB_BA", LIST_BA, STRING_BA);
+		testTwoElementList(A_addB_AB, "A_addB_AB", LIST_AB, STRING_AB);
 		//1-element to changed 1-element via set()
+		testSingleElementList(A_set0_B, "A_set0_B", LIST_B, STRING_B);
 		//2-element to 1-element
 		//2-element to 3-element
 		//2-element to changed 2-element via set()
@@ -261,6 +267,16 @@ public class ListTester {
 	}
 	private Scenario<Integer> A_addToFrontB_BA = () -> A_addToFrontB_BA();
 
+	/** Scenario: [A] -> add(B) -> [A,B] 
+	 * @return [A,B] after add(B)
+	 */
+	private IndexedUnsortedList<Integer> A_addB_AB() {
+		IndexedUnsortedList<Integer> list = emptyList_addToFrontA_A(); 
+		list.add(ELEMENT_B);
+		return list;
+	}
+	private Scenario<Integer> A_addB_AB = () -> A_addB_AB();
+
 	/** Scenario: [A] -> removeFirst() -> [] 
 	 * @return [] after removeFirst()
 	 */
@@ -270,6 +286,16 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> A_removeFirst_emptyList = () -> A_removeFirst_emptyList();
+
+	/** Scenario: [A] -> set(0,B) -> [B] 
+	 * @return [B] after set(0,B)
+	 */
+	private IndexedUnsortedList<Integer> A_set0_B() {
+		IndexedUnsortedList<Integer> list = emptyList_addToFrontA_A(); 
+		list.set(0,ELEMENT_B);
+		return list;
+	}
+	private Scenario<Integer> A_set0_B = () -> A_set0_B();
 
 	/////////////////////////////////
 	//XXX Tests for 0-element list
