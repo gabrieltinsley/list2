@@ -49,14 +49,17 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public void addToRear(T element) {
-		// TODO 
-		
+		if(array.length == rear) {
+            expandCapacity();
+        }
+        array[rear] = element;
+        rear++;
+        modCount++;
 	}
 
 	@Override
 	public void add(T element) {
-		// TODO 
-		
+		addToRear(element);
 	}
 
 	@Override
