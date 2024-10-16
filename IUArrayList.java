@@ -43,8 +43,18 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public void addToFront(T element) {
-		// TODO 
-		
+		if(array.length == rear) {
+            expandCapacity();
+        }
+
+        // move elements to one to the right
+        for(int index = rear; index > 0; index--) {
+            array[index] = array[index - 1];
+        }
+
+        array[0] = element;
+        rear++;
+        modCount++;
 	}
 
 	@Override
@@ -76,14 +86,35 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public T removeFirst() {
-		// TODO 
-		return null;
+		if(isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        T retVal = array[0];
+
+        rear--;
+
+        for(int i = 0; i < rear; i++) {
+            array[i] = array[i + 1];
+        }
+
+        array[rear] = null;
+        modCount++;
+
+		return retVal;
 	}
 
 	@Override
 	public T removeLast() {
-		// TODO 
-		return null;
+        if(isEmpty()){
+            throw new NoSuchElementException();
+        }
+        T retVal = array[rear - 1];
+
+		rear--;
+        array[rear] = null;
+        modCount++;
+
+		return retVal;
 	}
 
 	@Override
