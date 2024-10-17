@@ -85,11 +85,11 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 
 		rear++;
 
-		for(int i = index; i < rear; i++) {
-			array[i] = array[i + 1];
+		for(int i = rear; i > index; i--) {
+			array[i] = array[i - 1];
 		}
 
-		array[index] = element;
+		array[index + 1] = element;
 		modCount++;
 	}
 
