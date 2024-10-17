@@ -192,6 +192,7 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 		}
 
 		array[index] = element;
+		modCount++;
 	}
 
 	@Override
