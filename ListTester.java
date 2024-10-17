@@ -143,6 +143,8 @@ public class ListTester {
 		String STRING_B = "B";
 		Integer[] LIST_BA = {ELEMENT_B, ELEMENT_A};
 		String STRING_BA = "BA";
+		Integer[] LIST_BC = {ELEMENT_B, ELEMENT_C};
+		String STRING_BC = "BC";
 		Integer[] LIST_AB = {ELEMENT_A, ELEMENT_B};
 		String STRING_AB = "AB";
 		Integer[] LIST_CB = {ELEMENT_C, ELEMENT_B};
@@ -176,6 +178,7 @@ public class ListTester {
 		testTwoElementList(AB_set0_CB, "AB_set0_CB", LIST_CB, STRING_CB);
 		//3-element to 2-element @ADDED
 		testTwoElementList(ABC_removeLast_AB, "ABC_removeLast_AB", LIST_AB, STRING_AB);
+		testTwoElementList(ABC_iterRemoveAfterNextA_BC, "ABC_iterRemoveAfterNextA_BC", LIST_BC, STRING_BC); // iterator test @change2
 		//3-element to changed 3-element via set() @ADDED
 		testThreeElementList(ABC_set1_ADC, "ABC_set1_ADC", LIST_ADC, STRING_ADC);
 		//Iterator concurrency tests
@@ -385,6 +388,18 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> AB_iterRemoveAfterNextA_B = () -> AB_iterRemoveAfterNextA_B();
+
+	/** Scenario: [A,B,C] -> iteratorRemoveAfterNextA -> [B,C] 
+	 * @return [B,C] after iteratorRemoveAfterNextA
+	 */
+	private IndexedUnsortedList<Integer> ABC_iterRemoveAfterNextA_BC() {
+		IndexedUnsortedList<Integer> list = AB_addToRearC_ABC(); 
+		Iterator<Integer> it = list.iterator();
+		it.next();
+		it.remove();
+		return list;
+	}
+	private Scenario<Integer> ABC_iterRemoveAfterNextA_BC = () -> ABC_iterRemoveAfterNextA_BC();
 
 
 
