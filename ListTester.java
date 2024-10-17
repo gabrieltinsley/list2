@@ -20,7 +20,7 @@ public class ListTester {
 		goodList, badList, arrayList, singleLinkedList, doubleLinkedList
 	};
 	// TODO: THIS IS WHERE YOU CHOOSE WHICH LIST TO TEST
-	private final static ListToUse LIST_TO_USE = ListToUse.arrayList;
+	private final static ListToUse LIST_TO_USE = ListToUse.goodList;
 
 	// possible results expected in tests
 	private enum Result {
@@ -161,6 +161,7 @@ public class ListTester {
 		testSingleElementList(emptyList_addAtIndexZero_A, "emptyList_addAtIndexZero_A", LIST_A, STRING_A);
 		//1-element to empty list @ADDED
 		testEmptyList(A_removeFirst_emptyList, "A_removeFirst_emptyList");
+		testEmptyList(A_iterRemoveAfterNextA_emptyList, "A_iterRemoveAfterNextA_emptyList"); // iterator test given
 		//1-element to 2-element
 		testTwoElementList(A_addToFrontB_BA, "A_addToFrontB_BA", LIST_BA, STRING_BA);
 		testTwoElementList(A_addB_AB, "A_addB_AB", LIST_AB, STRING_AB);
@@ -168,6 +169,7 @@ public class ListTester {
 		testSingleElementList(A_set0_B, "A_set0_B", LIST_B, STRING_B);
 		//2-element to 1-element @ADDED
 		testSingleElementList(AB_removeFirst_B, "AB_removeFirst_B", LIST_B, STRING_B);
+		testSingleElementList(AB_iterRemoveAfterNextA_B, "AB_iterRemoveAfterNextA_B", LIST_B, STRING_B); // iterator test @change1
 		//2-element to 3-element @ADDED
 		testThreeElementList(AB_addToRearC_ABC, "AB_addToRearC_ABC", LIST_ABC, STRING_ABC);
 		//2-element to changed 2-element via set() @ADDED
@@ -357,6 +359,35 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> ABC_set1_ADC = () -> ABC_set1_ADC();
+
+	// Iterator tests
+
+	/** Scenario: [A] -> iteratorRemoveAfterNextA -> [ ] 
+	 * @return [ ] after iteratorRemoveAfterNextA
+	 */
+	private IndexedUnsortedList<Integer> A_iterRemoveAfterNextA_emptyList() {
+		IndexedUnsortedList<Integer> list = emptyList_addToFrontA_A(); 
+		Iterator<Integer> it = list.iterator();
+		it.next();
+		it.remove();
+		return list;
+	}
+	private Scenario<Integer> A_iterRemoveAfterNextA_emptyList = () -> A_iterRemoveAfterNextA_emptyList();
+
+	/** Scenario: [A,B] -> iteratorRemoveAfterNextA -> [B] 
+	 * @return [B] after iteratorRemoveAfterNextA
+	 */
+	private IndexedUnsortedList<Integer> AB_iterRemoveAfterNextA_B() {
+		IndexedUnsortedList<Integer> list = ABC_removeLast_AB(); 
+		Iterator<Integer> it = list.iterator();
+		it.next();
+		it.remove();
+		return list;
+	}
+	private Scenario<Integer> AB_iterRemoveAfterNextA_B = () -> AB_iterRemoveAfterNextA_B();
+
+
+
 
 	/////////////////////////////////
 	//XXX Tests for 0-element list
