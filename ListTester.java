@@ -143,8 +143,8 @@ public class ListTester {
 		String STRING_B = "B";
 		Integer[] LIST_BA = {ELEMENT_B, ELEMENT_A};
 		String STRING_BA = "BA";
-		Integer[] LIST_BC = {ELEMENT_B, ELEMENT_C};
-		String STRING_BC = "BC";
+		//Integer[] LIST_BC = {ELEMENT_B, ELEMENT_C};
+		//String STRING_BC = "BC";
 		Integer[] LIST_AB = {ELEMENT_A, ELEMENT_B};
 		String STRING_AB = "AB";
 		Integer[] LIST_CB = {ELEMENT_C, ELEMENT_B};

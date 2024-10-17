@@ -74,8 +74,22 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public void addAfter(T element, T target) {
-		// TODO
+		expandCapacity();
 
+		int index = indexOf(target);
+
+		if(index == NOT_FOUND) {
+			throw new NoSuchElementException();
+		}
+
+		rear++;
+
+		for(int i = index; i < rear; i++) {
+			array[i] = array[i + 1];
+		}
+
+		array[index] = element;
+		modCount++;
 	}
 
 	@Override
