@@ -167,6 +167,7 @@ public class ListTester {
 		//1-element to 2-element
 		testTwoElementList(A_addToFrontB_BA, "A_addToFrontB_BA", LIST_BA, STRING_BA);
 		testTwoElementList(A_addB_AB, "A_addB_AB", LIST_AB, STRING_AB);
+		testTwoElementList(A_iterAddBWithNewIterator_BA,"A_iterAddBWithNewIterator_BA", LIST_BA, STRING_BA); // iterator test @change3
 		//1-element to changed 1-element via set() @ADDED
 		testSingleElementList(A_set0_B, "A_set0_B", LIST_B, STRING_B);
 		//2-element to 1-element @ADDED
@@ -400,6 +401,20 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> ABC_iterRemoveAfterNextA_BC = () -> ABC_iterRemoveAfterNextA_BC();
+
+	/** Scenario: [A] -> iteratorAddBWithNewIterator -> [B,A] 
+	 * @return [B,A] after iteratorAddBWithNewIterator
+	 */
+	private IndexedUnsortedList<Integer> A_iterAddBWithNewIterator_BA() {
+		IndexedUnsortedList<Integer> list = emptyList_addA_A();
+		Iterator<Integer> it = list.iterator();
+		it.next();
+		Iterator<Integer> it2 = list.iterator();
+		it2.hasNext();
+		list.addToFront(ELEMENT_B);
+		return list;
+	}
+	private Scenario<Integer> A_iterAddBWithNewIterator_BA = () -> A_iterAddBWithNewIterator_BA();
 
 
 
