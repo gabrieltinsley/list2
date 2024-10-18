@@ -181,6 +181,11 @@ public class ListTester {
 		testSingleElementList(A_set0_B, "A_set0_B", LIST_B, STRING_B);
 		//2-element to 1-element @ADDED
 		testSingleElementList(AB_removeFirst_B, "AB_removeFirst_B", LIST_B, STRING_B);
+		testSingleElementList(AB_removeLast_A, "AB_removeLast_A", LIST_A, STRING_A);
+		testSingleElementList(AB_removeA_B, "AB_removeA_B", LIST_B, STRING_B);
+		testSingleElementList(AB_removeB_A, "AB_removeB_A", LIST_A, STRING_A);
+		testSingleElementList(AB_remove0_B, "AB_remove0_B", LIST_B, STRING_B);
+		testSingleElementList(AB_remove1_A, "AB_remove1_A", LIST_A, STRING_A);
 		testSingleElementList(AB_iterRemoveAfterNextA_B, "AB_iterRemoveAfterNextA_B", LIST_B, STRING_B); // iterator test @change1
 		testSingleElementList(AB_iterRemoveAfterNextB_A, "AB_iterRemoveAfterNextB_A", LIST_A, STRING_A); // iterator test @change2
 		//2-element to 3-element @ADDED
@@ -409,6 +414,56 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> AB_removeFirst_B = () -> AB_removeFirst_B();
+
+	/** Scenario: [A,B] -> removeLast() -> [A] @ADDED
+	 * @return [A] after removeFirst
+	 */
+	private IndexedUnsortedList<Integer> AB_removeLast_A() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.removeLast();
+		return list;
+	}
+	private Scenario<Integer> AB_removeLast_A = () -> AB_removeLast_A();
+
+	/** Scenario: [A,B] -> remove(A) -> [B] @ADDED
+	 * @return [B] after remove(A)
+	 */
+	private IndexedUnsortedList<Integer> AB_removeA_B() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.remove(ELEMENT_A);
+		return list;
+	}
+	private Scenario<Integer> AB_removeA_B = () -> AB_removeA_B();
+
+	/** Scenario: [A,B] -> remove(B) -> [A] @ADDED
+	 * @return [A] after remove(B)
+	 */
+	private IndexedUnsortedList<Integer> AB_removeB_A() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.remove(ELEMENT_B);
+		return list;
+	}
+	private Scenario<Integer> AB_removeB_A = () -> AB_removeB_A();
+
+	/** Scenario: [A,B] -> remove(0) -> [B] @ADDED
+	 * @return [B] after remove(0)
+	 */
+	private IndexedUnsortedList<Integer> AB_remove0_B() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.remove(0);
+		return list;
+	}
+	private Scenario<Integer> AB_remove0_B = () -> AB_remove0_B();
+
+	/** Scenario: [A,B] -> remove(1) -> [A] @ADDED
+	 * @return [A] after remove(1)
+	 */
+	private IndexedUnsortedList<Integer> AB_remove1_A() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.remove(1);
+		return list;
+	}
+	private Scenario<Integer> AB_remove1_A = () -> AB_remove1_A();
 
 	/** Scenario: [A,B] -> addToRear(C) -> [A,B,C] @ADDED
 	 * @return [A,B,C] after addToRear(C)
