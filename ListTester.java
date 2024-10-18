@@ -153,6 +153,10 @@ public class ListTester {
 		String STRING_CB = "CB";
 		Integer[] LIST_ABC = {ELEMENT_A,ELEMENT_B,ELEMENT_C};
 		String STRING_ABC = "ABC";
+		Integer[] LIST_ACB = {ELEMENT_A,ELEMENT_C,ELEMENT_B};
+		String STRING_ACB = "ACB";
+		Integer[] LIST_CAB = {ELEMENT_C,ELEMENT_A,ELEMENT_B};
+		String STRING_CAB = "CAB";
 		Integer[] LIST_ADC = {ELEMENT_A,ELEMENT_D,ELEMENT_C};
 		String STRING_ADC = "ADC";
 
@@ -189,7 +193,14 @@ public class ListTester {
 		testSingleElementList(AB_iterRemoveAfterNextA_B, "AB_iterRemoveAfterNextA_B", LIST_B, STRING_B); // iterator test @change1
 		testSingleElementList(AB_iterRemoveAfterNextB_A, "AB_iterRemoveAfterNextB_A", LIST_A, STRING_A); // iterator test @change2
 		//2-element to 3-element @ADDED
+		testThreeElementList(AB_addToFrontC_CAB, "AB_addToFrontC_CAB", LIST_CAB, STRING_CAB);
 		testThreeElementList(AB_addToRearC_ABC, "AB_addToRearC_ABC", LIST_ABC, STRING_ABC);
+		testThreeElementList(AB_addAfterCA_ACB, "AB_addAfterCA_ACB", LIST_ACB, STRING_ACB);
+		testThreeElementList(AB_addAfterCB_ABC, "AB_addAfterCB_ABC", LIST_ABC, STRING_ABC);
+		testThreeElementList(AB_addC_ABC, "AB_addC_ABC", LIST_ABC, STRING_ABC);
+		testThreeElementList(AB_add0C_CAB, "AB_add0C_CAB", LIST_CAB, STRING_CAB);
+		testThreeElementList(AB_add1C_ACB, "AB_add1C_ACB", LIST_ACB, STRING_ACB);
+		testThreeElementList(AB_add2C_ABC, "AB_add2C_ABC", LIST_ABC, STRING_ABC);
 		//2-element to changed 2-element via set() @ADDED
 		testTwoElementList(AB_set0_CB, "AB_set0_CB", LIST_CB, STRING_CB);
 		//3-element to 2-element @ADDED
@@ -465,6 +476,16 @@ public class ListTester {
 	}
 	private Scenario<Integer> AB_remove1_A = () -> AB_remove1_A();
 
+	/** Scenario: [A,B] -> addToFront(C) -> [C,A,B] @ADDED
+	 * @return [C,A,B] after addToFront(C)
+	 */
+	private IndexedUnsortedList<Integer> AB_addToFrontC_CAB() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.addToFront(ELEMENT_C);
+		return list;
+	}
+	private Scenario<Integer> AB_addToFrontC_CAB = () -> AB_addToFrontC_CAB();
+
 	/** Scenario: [A,B] -> addToRear(C) -> [A,B,C] @ADDED
 	 * @return [A,B,C] after addToRear(C)
 	 */
@@ -474,6 +495,66 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> AB_addToRearC_ABC = () -> AB_addToRearC_ABC();
+
+	/** Scenario: [A,B] -> addAfter(C,A) -> [A,C,B] @ADDED
+	 * @return [A,C,B] after addAfter(C,A)
+	 */
+	private IndexedUnsortedList<Integer> AB_addAfterCA_ACB() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.addAfter(ELEMENT_C,ELEMENT_A);
+		return list;
+	}
+	private Scenario<Integer> AB_addAfterCA_ACB = () -> AB_addAfterCA_ACB();
+
+	/** Scenario: [A,B] -> addAfter(C,B) -> [A,B,C] @ADDED
+	 * @return [A,B,C] after addAfter(C,B)
+	 */
+	private IndexedUnsortedList<Integer> AB_addAfterCB_ABC() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.addAfter(ELEMENT_C, ELEMENT_B);
+		return list;
+	}
+	private Scenario<Integer> AB_addAfterCB_ABC = () -> AB_addAfterCB_ABC();
+
+	/** Scenario: [A,B] -> add(C) -> [A,B,C] @ADDED
+	 * @return [A,B,C] after add(C)
+	 */
+	private IndexedUnsortedList<Integer> AB_addC_ABC() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.add(ELEMENT_C);
+		return list;
+	}
+	private Scenario<Integer> AB_addC_ABC = () -> AB_addC_ABC();
+
+	/** Scenario: [A,B] -> add(0,C) -> [C,A,B] @ADDED
+	 * @return [C,A,B] after add(0,C)
+	 */
+	private IndexedUnsortedList<Integer> AB_add0C_CAB() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.add(0,ELEMENT_C);
+		return list;
+	}
+	private Scenario<Integer> AB_add0C_CAB = () -> AB_add0C_CAB();
+
+	/** Scenario: [A,B] -> add(1,C) -> [A,C,B] @ADDED
+	 * @return [A,C,B] after add(1,C)
+	 */
+	private IndexedUnsortedList<Integer> AB_add1C_ACB() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.add(1,ELEMENT_C);
+		return list;
+	}
+	private Scenario<Integer> AB_add1C_ACB = () -> AB_add1C_ACB();
+
+	/** Scenario: [A,B] -> add(2,C) -> [A,B,C] @ADDED
+	 * @return [A,B,C] after add(2,C)
+	 */
+	private IndexedUnsortedList<Integer> AB_add2C_ABC() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.add(2,ELEMENT_C);
+		return list;
+	}
+	private Scenario<Integer> AB_add2C_ABC = () -> AB_add2C_ABC();
 
 	/** Scenario: [A,B] -> set(0,C) -> [C,B] @ADDED
 	 * @return [C,B] after set(0,C)
