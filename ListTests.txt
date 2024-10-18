@@ -814,10 +814,10 @@ Adding iterator tests for 7 more change scenarios
     toString() returns "[A]"
 31)x [A,B] -> set(0,C) -> [C,B]
 32)x [A,B] -> set(1,C) -> [A,C]
-33) [A,B,C] -> removeFirst() -> [B,C]
+33)x [A,B,C] -> removeFirst() -> [B,C]
 34)x [A,B,C] -> removeLast() -> [A,B]
-35) [A,B,C] -> remove(A) -> [B,C]
-36) [A,B,C] -> remove(B) -> [A,C]
+35)x [A,B,C] -> remove(A) -> [B,C]
+36)x [A,B,C] -> remove(B) -> [A,C]
   Tests:
     addToFront(D) throws no Exceptions
     addToRear(D) throws no Exceptions
@@ -861,9 +861,9 @@ Adding iterator tests for 7 more change scenarios
     listIterator() throws UnsupportedOperationException
     listIterator(0) throws UnsupportedOperationException
     toString() returns "[A, C]"
-37) [A,B,C] -> remove(C) -> [A,B]
-38) [A,B,C] -> remove(0) -> [B,C]
-39) [A,B,C] -> remove(1) -> [A,C]
+37)x [A,B,C] -> remove(C) -> [A,B]
+38)x [A,B,C] -> remove(0) -> [B,C]
+39)x [A,B,C] -> remove(1) -> [A,C]
   Tests:
     addToFront(D) throws no Exceptions
     addToRear(D) throws no Exceptions
@@ -907,7 +907,7 @@ Adding iterator tests for 7 more change scenarios
     listIterator() throws UnsupportedOperationException
     listIterator(0) throws UnsupportedOperationException
     toString() returns "[A, C]"
-40) [A,B,C] -> remove(2) -> [A,B]
+40)x [A,B,C] -> remove(2) -> [A,B]
   Tests:
     addToFront(C) throws no Exceptions
     addToRear(C) throws no Exceptions
@@ -952,7 +952,7 @@ Adding iterator tests for 7 more change scenarios
     listIterator(0) throws UnsupportedOperationException
     toString() returns "[A, B]"
 41) [A,B,C] -> set(0,D) -> [D,B,C]
-42) [A,B,C] -> set(1,D) -> [A,D,C]
+42)x [A,B,C] -> set(1,D) -> [A,D,C]
 43) [A,B,C] -> set(2,D) -> [A,B,D]
 
 including Iterator remove() method, add the following:
