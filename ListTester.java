@@ -203,6 +203,7 @@ public class ListTester {
 		testThreeElementList(AB_add2C_ABC, "AB_add2C_ABC", LIST_ABC, STRING_ABC);
 		//2-element to changed 2-element via set() @ADDED
 		testTwoElementList(AB_set0_CB, "AB_set0_CB", LIST_CB, STRING_CB);
+		testTwoElementList(AB_set1_AC, "AB_set1_AC", LIST_AC, STRING_AC);
 		//3-element to 2-element @ADDED
 		testTwoElementList(ABC_removeLast_AB, "ABC_removeLast_AB", LIST_AB, STRING_AB);
 		testTwoElementList(ABC_iterRemoveAfterNextA_BC, "ABC_iterRemoveAfterNextA_BC", LIST_BC, STRING_BC); // iterator test @change3
@@ -565,6 +566,16 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> AB_set0_CB = () -> AB_set0_CB();
+
+	/** Scenario: [A,B] -> set(1,C) -> [A,C] @ADDED
+	 * @return [A,C] after set(1,C)
+	 */
+	private IndexedUnsortedList<Integer> AB_set1_AC() {
+		IndexedUnsortedList<Integer> list = A_addB_AB(); 
+		list.set(1,ELEMENT_C);
+		return list;
+	}
+	private Scenario<Integer> AB_set1_AC = () -> AB_set1_AC();
 
 	/** Scenario: [A,B,C] -> removeLast() -> [A,B] @ADDED
 	 * @return [A,B] after removeLast()
