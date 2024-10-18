@@ -47,7 +47,7 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public void addToFront(T element) {
-		// move elements to one to the right
+		// move elements one to the right
 		for (int index = rear; index > 0; index--) {
 			array[index] = array[index - 1];
 		}
@@ -84,7 +84,7 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 		expandCapacity();
 
 		rear++;
-
+		//shift elements
 		for(int i = rear; i > index; i--) {
 			array[i] = array[i - 1];
 		}
@@ -102,7 +102,7 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 		expandCapacity();
 
 		rear++;
-
+		//shift elements
 		for(int i = rear-1; i > index; i--) {
 			array[i] = array[i - 1];
 		}
@@ -120,7 +120,7 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 		T retVal = array[0];
 
 		rear--;
-
+		//shift elements
 		for (int i = 0; i < rear; i++) {
 			array[i] = array[i + 1];
 		}
@@ -175,7 +175,7 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 		T retVal = array[index];
 
 		rear--;
- 
+		// shift elements
 		for(int i = index; i < rear; i++) {
 			array[i] = array[i + 1];
 		}
@@ -330,7 +330,7 @@ public class IUArrayList<T> implements IndexedUnsortedList<T> {
 
 			nextIndex--;
 			rear--;
-
+			// shift elements
 			for(int i = nextIndex; i < rear; i++) {
 				array[i] = array[i + 1];
 			}
