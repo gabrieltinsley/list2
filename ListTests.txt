@@ -951,9 +951,9 @@ Adding iterator tests for 7 more change scenarios
     listIterator() throws UnsupportedOperationException
     listIterator(0) throws UnsupportedOperationException
     toString() returns "[A, B]"
-41) [A,B,C] -> set(0,D) -> [D,B,C]
+41)x [A,B,C] -> set(0,D) -> [D,B,C]
 42)x [A,B,C] -> set(1,D) -> [A,D,C]
-43) [A,B,C] -> set(2,D) -> [A,B,D]
+43)x [A,B,C] -> set(2,D) -> [A,B,D]
 
 including Iterator remove() method, add the following:
 44)x [A] -> iterator remove() after next() returns A -> [] given

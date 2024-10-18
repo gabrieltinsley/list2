@@ -159,6 +159,10 @@ public class ListTester {
 		String STRING_CAB = "CAB";
 		Integer[] LIST_ADC = {ELEMENT_A,ELEMENT_D,ELEMENT_C};
 		String STRING_ADC = "ADC";
+		Integer[] LIST_DBC = {ELEMENT_D,ELEMENT_B,ELEMENT_C};
+		String STRING_DBC = "DBC";
+		Integer[] LIST_ABD = {ELEMENT_A,ELEMENT_B,ELEMENT_D};
+		String STRING_ABD = "ABD";
 
 		//newly constructed empty list
 		testEmptyList(newList, "newList");
@@ -217,7 +221,9 @@ public class ListTester {
 		testTwoElementList(ABC_iterRemoveAfterNextB_AC, "ABC_iterRemoveAfterNextB_AC", LIST_AC, STRING_AC); // iterator test @change4
 		testTwoElementList(ABC_iterRemoveAfterNextC_AB, "ABC_iterRemoveAfterNextC_AB", LIST_AB, STRING_AB); // iterator test @change5
 		//3-element to changed 3-element via set() @ADDED
+		testThreeElementList(ABC_set0_DBC, "ABC_set0_DBC", LIST_DBC, STRING_DBC);
 		testThreeElementList(ABC_set1_ADC, "ABC_set1_ADC", LIST_ADC, STRING_ADC);
+		testThreeElementList(ABC_set2_ABD, "ABC_set2_ABD", LIST_ABD, STRING_ABD);
 		//Iterator concurrency tests
 		test_IterConcurrency();
 		if (SUPPORTS_LIST_ITERATOR) {
@@ -664,6 +670,16 @@ public class ListTester {
 	}
 	private Scenario<Integer> ABC_remove2_AB = () -> ABC_remove2_AB();
 
+	/** Scenario: [A,B,C] -> set(0,D) -> [D,B,C] @ADDED
+	 * @return [D,B,C] after set(0,D)
+	 */
+	private IndexedUnsortedList<Integer> ABC_set0_DBC() {
+		IndexedUnsortedList<Integer> list = AB_addToRearC_ABC(); 
+		list.set(0,ELEMENT_D);
+		return list;
+	}
+	private Scenario<Integer> ABC_set0_DBC = () -> ABC_set0_DBC();
+
 
 	/** Scenario: [A,B,C] -> set(1,D) -> [A,D,C] @ADDED
 	 * @return [A,D,C] after set(1,D)
@@ -674,6 +690,16 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> ABC_set1_ADC = () -> ABC_set1_ADC();
+
+	/** Scenario: [A,B,C] -> set(2,D) -> [A,B,D] @ADDED
+	 * @return [A,B,D] after set(2,D)
+	 */
+	private IndexedUnsortedList<Integer> ABC_set2_ABD() {
+		IndexedUnsortedList<Integer> list = AB_addToRearC_ABC(); 
+		list.set(2,ELEMENT_D);
+		return list;
+	}
+	private Scenario<Integer> ABC_set2_ABD = () -> ABC_set2_ABD();
 
 	// Iterator tests
 
