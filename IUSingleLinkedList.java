@@ -1,3 +1,4 @@
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -15,12 +16,14 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 	private Node<T> head, tail;
 	private int size;
 	private int modCount;
+    private SLLIterator it;
 	
 	/** Creates an empty list */
 	public IUSingleLinkedList() {
 		head = tail = null;
 		size = 0;
 		modCount = 0;
+        it = new SLLIterator();
 	}
 
 	@Override
@@ -119,8 +122,19 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public T get(int index) {
-		// TODO 
-		return null;
+        Node<T> current = head;
+        int currentIndex = 0;
+
+		while(current != null && currentIndex > index) {
+            if(it.hasNext()) {
+                current = current.getNext();
+                currentIndex++;
+            }
+            else {
+                throw new IndexOutOfBoundsException();
+            }
+        }
+		return current.getElement();
 	}
 
 	@Override
@@ -214,13 +228,19 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 		@Override
 		public boolean hasNext() {
-			// TODO 
-			return false;
+			if(iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+
+			return (!nextNode.getElement().equals(tail.getElement()));
 		}
 
 		@Override
 		public T next() {
-			// TODO 
+			if(!hasNext()) {
+                throw new NoSuchElementException();
+            }
+
 			return null;
 		}
 		
