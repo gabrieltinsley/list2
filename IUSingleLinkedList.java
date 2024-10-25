@@ -16,14 +16,12 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 	private Node<T> head, tail;
 	private int size;
 	private int modCount;
-    //private SLLIterator it;
 	
 	/** Creates an empty list */
 	public IUSingleLinkedList() {
 		head = tail = null;
 		size = 0;
 		modCount = 0;
-        //it = new SLLIterator();
 	}
 
 	@Override
@@ -58,7 +56,23 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public void addAfter(T element, T target) {
-		// TODO 
+		
+		Node<T> current = head;
+
+		while (current != null && !current.getElement().equals(target)) {
+            current = current.getNext();
+        }
+		if (current == null) {
+			throw new NoSuchElementException();
+		}
+		Node<T> newNode = new Node<T>(element);
+		newNode.setNext(current.getNext());
+		current.setNext(newNode);
+		if(newNode.getNext() == null) {
+			tail = newNode;
+		}
+		size++;
+		modCount++;
 		
 	}
 
