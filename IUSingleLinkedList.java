@@ -16,32 +16,44 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 	private Node<T> head, tail;
 	private int size;
 	private int modCount;
-    private SLLIterator it;
+    //private SLLIterator it;
 	
 	/** Creates an empty list */
 	public IUSingleLinkedList() {
 		head = tail = null;
 		size = 0;
 		modCount = 0;
-        it = new SLLIterator();
+        //it = new SLLIterator();
 	}
 
 	@Override
 	public void addToFront(T element) {
-		// TODO 
-		
+		Node<T> newNode = new Node<T>(element);
+		newNode.setNext(head);
+		head = newNode;
+		if (tail == null) {
+			tail = newNode;
+		}
+		size++;
+		modCount++;
 	}
 
 	@Override
 	public void addToRear(T element) {
-		// TODO 
-		
+		Node<T> newNode = new Node<T>(element);
+		if(head == null) {
+			head = newNode;
+		} else {
+			tail.setNext(newNode);
+		}
+		tail = newNode;
+		size++;
+		modCount++;
 	}
 
 	@Override
 	public void add(T element) {
-		// TODO 
-		
+		addToRear(element);
 	}
 
 	@Override
@@ -52,8 +64,25 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public void add(int index, T element) {
-		// TODO 
-		
+		if(index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+		if (index == 0) {
+			addToFront(element);
+		} else {
+			Node<T> current = head;
+			for(int i = 0; i < index-1; i++) {
+				current = current.getNext();
+			}
+			Node<T> newNode = new Node<T>(element);
+			newNode.setNext(current.getNext());
+			current.setNext(newNode);
+			if (newNode.getNext() == null) {
+				tail = newNode;
+			}
+			size++;
+			modCount++;
+		}
 	}
 
 	@Override
@@ -122,19 +151,22 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public T get(int index) {
-        Node<T> current = head;
-        int currentIndex = 0;
+		if(index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+		T retVal;
+		if(index == 0) {
+			retVal = head.getElement();
+		} else {
+			Node<T> current = head;
+			for(int i = 0; i < index; i++) {
+				current = current.getNext();
+			}
 
-		while(current != null && currentIndex > index) {
-            if(it.hasNext()) {
-                current = current.getNext();
-                currentIndex++;
-            }
-            else {
-                throw new IndexOutOfBoundsException();
-            }
-        }
-		return current.getElement();
+			retVal = current.getElement();
+
+		}
+		return retVal;
 	}
 
 	@Override
@@ -232,7 +264,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
                 throw new ConcurrentModificationException();
             }
 
-			return (!nextNode.getElement().equals(tail.getElement()));
+			return nextNode != null;
 		}
 
 		@Override
