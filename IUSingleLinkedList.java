@@ -121,7 +121,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 		if(isEmpty()) {
 			throw new NoSuchElementException();
 		}
-		
+
 		Node<T> current = head;
 
 		for(int i = 0; i < size - 1; i++) {
@@ -130,6 +130,9 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 		T retVal = tail.getElement();
 		current.setNext(null);
 		tail = current;
+
+		size--;
+		modCount++;
 
 		return retVal;
 	}
@@ -176,8 +179,32 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public T remove(int index) {
-		// TODO 
-		return null;
+		if(index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+		T retVal;
+
+		if (index == 0) {
+			retVal = head.getElement();
+			removeFirst();
+		} else {
+			Node<T> current = head;
+	
+			for(int i = 0; i < index - 1; i++) {
+				current = current.getNext();
+			}
+	
+			retVal = current.getNext().getElement();
+			current.setNext(current.getNext().getNext());
+			if (tail == null) {
+				tail = current;
+			}
+		}
+
+		size--;
+		modCount++;
+		return retVal;
+
 	}
 
 	@Override
