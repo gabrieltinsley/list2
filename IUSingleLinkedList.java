@@ -118,8 +118,20 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public T removeLast() {
-		// TODO 
-		return null;
+		if(isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		
+		Node<T> current = head;
+
+		for(int i = 0; i < size - 1; i++) {
+			current = current.getNext();
+		}
+		T retVal = tail.getElement();
+		current.setNext(null);
+		tail = current;
+
+		return retVal;
 	}
 
 	@Override
