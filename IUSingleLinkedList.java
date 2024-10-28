@@ -209,7 +209,25 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 	@Override
 	public void set(int index, T element) {
-		// TODO 
+		if (index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+		if(index == 0) {
+			Node<T> firstNode = new Node<T>(element);
+			firstNode.setNext(head.getNext());
+			head.setNext(firstNode);
+		} else {
+			Node<T> current = head;
+	
+			for(int i = 0; i < index - 1; i++) {
+				current = current.getNext();
+			}
+			Node<T> newNode = new Node<T>(element);
+			newNode.setNext(current.getNext().getNext());
+			current.setNext(newNode);
+		}
+
+		modCount++;
 		
 	}
 
@@ -314,12 +332,17 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 	/** Iterator for IUSingleLinkedList */
 	private class SLLIterator implements Iterator<T> {
 		private Node<T> nextNode;
+		private Node<T> previous;
 		private int iterModCount;
+		private boolean removable;
+
 		
 		/** Creates a new iterator for the list */
 		public SLLIterator() {
 			nextNode = head;
+			previous = null;
 			iterModCount = modCount;
+			removable = false;
 		}
 
 		@Override
@@ -336,13 +359,40 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 			if(!hasNext()) {
                 throw new NoSuchElementException();
             }
+			previous = nextNode;
+			nextNode = nextNode.getNext();
+			removable = true;
 
-			return null;
+			return previous.getElement();
 		}
 		
 		@Override
 		public void remove() {
-			// TODO
+			if (iterModCount != modCount) {
+				throw new ConcurrentModificationException();
+			}
+
+			if (!removable) {
+				throw new IllegalStateException();
+			}
+
+			removable = false;
+
+			if (size() == 1) { //only node
+				head = tail = null;
+			} else if (nextNode == head) { //first node
+				head = nextNode.getNext();
+			} else if (nextNode == tail) { //last node
+				tail = previous;
+				tail.setNext(null);
+			} else { //somewhere in the middle
+				previous.setNext(nextNode.getNext());
+			}
+
+			size--;
+
+			modCount++;
+			iterModCount++;
 		}
 	}
 }
