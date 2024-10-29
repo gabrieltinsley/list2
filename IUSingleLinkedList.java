@@ -189,15 +189,18 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 			removeFirst();
 		} else {
 			Node<T> current = head;
+			Node<T> previous = null;
 	
-			for(int i = 0; i < index - 1; i++) {
+			for(int i = 0; i < index; i++) {
+				previous = current;
 				current = current.getNext();
 			}
 	
-			retVal = current.getNext().getElement();
-			current.setNext(current.getNext().getNext());
-			if (tail == null) {
-				tail = current;
+			retVal = current.getElement();
+			
+			previous.setNext(current.getNext());
+			if (current.getNext() == null) {
+				tail = previous;
 			}
 		}
 
@@ -333,6 +336,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 	private class SLLIterator implements Iterator<T> {
 		private Node<T> nextNode;
 		private Node<T> previous;
+		private Node<T> backTwo;
 		private int iterModCount;
 		private boolean removable;
 
@@ -341,6 +345,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 		public SLLIterator() {
 			nextNode = head;
 			previous = null;
+			backTwo = null;
 			iterModCount = modCount;
 			removable = false;
 		}
@@ -359,6 +364,8 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 			if(!hasNext()) {
                 throw new NoSuchElementException();
             }
+
+			backTwo = previous;
 			previous = nextNode;
 			nextNode = nextNode.getNext();
 			removable = true;
@@ -378,15 +385,26 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 			removable = false;
 
-			if (size() == 1) { //only node
+			// if (size() == 1) { //only node
+			// 	head = tail = null;
+			// } else if (nextNode == head) { //first node
+			// 	head = nextNode.getNext();
+			// } else if (nextNode == tail) { //last node
+			// 	tail = previous;
+			// 	tail.setNext(null);
+			// } else { //somewhere in the middle
+			// 	previous.setNext(nextNode.getNext());
+			// }
+
+			if (size() == 1) {
 				head = tail = null;
-			} else if (nextNode == head) { //first node
-				head = nextNode.getNext();
-			} else if (nextNode == tail) { //last node
+			} else if (previous == head) {
+				head = previous.getNext();
+			} else if (nextNode == tail) {
 				tail = previous;
 				tail.setNext(null);
-			} else { //somewhere in the middle
-				previous.setNext(nextNode.getNext());
+			} else {
+				backTwo.setNext(nextNode);
 			}
 
 			size--;
