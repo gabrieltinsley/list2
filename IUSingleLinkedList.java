@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  * An Iterator with working remove() method is implemented, but
  * ListIterator is unsupported.
  * 
- * @author 
+ * @author Gabriel Tinsley
  * 
  * @param <T> type to store
  */
@@ -106,13 +106,19 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 		}
 		T retVal;
 
-		Node<T> current = head;
-
-		retVal = current.getElement();
-		head = current.getNext();
+		if(size() == 1) {
+			retVal = head.getElement();
+			head = tail = null;
+		} else {
+			Node<T> current = head;
+	
+			retVal = current.getElement();
+			head = current.getNext();
+		}
 
 		size--;
 		modCount++;
+
 
 		return retVal;
 	}
@@ -190,7 +196,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 		}
 		T retVal;
 
-		if (index == 0) {
+		if (index == 0 ) {
 			retVal = removeFirst();
 		} else {
 			Node<T> current = head;
@@ -207,43 +213,34 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 			if (current.getNext() == null) {
 				tail = previous;
 			}
+			size--;
+			modCount++;
 		}
 
-		size--;
-		modCount++;
 		return retVal;
 
 	}
 
 	@Override
 	public void set(int index, T element) {
-		if (index < 0 || index > size) {
+		if (index < 0 || index >= size) {
 			throw new IndexOutOfBoundsException();
 		}
-		if(index == 0) {
-			Node<T> firstNode = new Node<T>(element);
-			firstNode.setNext(head.getNext());
-			head.setNext(firstNode);
-		} else {
-			Node<T> current = head;
-			Node<T> previous = null;
-	
-			for(int i = 0; i < index; i++) {
-				previous = current;
-				current = current.getNext();
-			}
-			Node<T> newNode = new Node<T>(element);
-			newNode.setNext(current.getNext());
-			previous.setNext(newNode);
+
+		Node<T> current = head;
+
+		for(int i = 0; i < index; i++) {
+			current = current.getNext();
 		}
 
+		current.setElement(element);
+
 		modCount++;
-		
 	}
 
 	@Override
 	public T get(int index) {
-		if(index < 0 || index > size) {
+		if(index < 0 || index >= size) {
 			throw new IndexOutOfBoundsException();
 		}
 		T retVal;
