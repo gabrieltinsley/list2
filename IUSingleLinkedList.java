@@ -63,7 +63,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 		Node<T> current = head;
 
-		while (current != null && !current.getElement().equals(target)) {
+		while (current != null && !current.getElement().equals(target)) { // finds target
 			current = current.getNext();
 		}
 
@@ -94,13 +94,13 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 			addToFront(element);
 		} else {
 			Node<T> current = head;
-			for (int i = 0; i < index - 1; i++) {
+			for (int i = 0; i < index - 1; i++) { // finds index to add after
 				current = current.getNext();
 			}
 			Node<T> newNode = new Node<T>(element);
 			newNode.setNext(current.getNext());
 			current.setNext(newNode);
-			if (newNode.getNext() == null) {
+			if (newNode.getNext() == null) { // puts tail in the right place
 				tail = newNode;
 			}
 
@@ -116,10 +116,10 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 		}
 		T retVal;
 
-		if (size() == 1) {
+		if (size() == 1) { // puts head and tail in the right place for a one element list
 			retVal = head.getElement();
 			head = tail = null;
-		} else {
+		} else { // removes everything else
 			Node<T> current = head;
 
 			retVal = current.getElement();
@@ -138,10 +138,10 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 			throw new NoSuchElementException();
 		}
 		T retVal;
-		if (size() == 1) {
+		if (size() == 1) { // puts head and tail in the right place for a one element list
 			retVal = head.getElement();
 			head = tail = null;
-		} else {
+		} else { // removes everything else
 			Node<T> current = head;
 
 			for (int i = 0; i < size - 2; i++) {
@@ -238,7 +238,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 
 		Node<T> current = head;
 
-		for (int i = 0; i < index; i++) {
+		for (int i = 0; i < index; i++) { // finds index to change
 			current = current.getNext();
 		}
 
@@ -272,7 +272,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 		Node<T> current = head;
 		int currentIndex = 0;
 
-		while (current != null && !current.getElement().equals(element)) {
+		while (current != null && !current.getElement().equals(element)) { // finds index of element
 			current = current.getNext();
 			currentIndex++;
 		}
@@ -392,9 +392,9 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 			removable = false;
 
 			Node<T> prevPrevNode = null;
-			if (head.getNext() == nextNode) {
+			if (head.getNext() == nextNode) { // for the case of removing first element
 				head = nextNode;
-			} else {
+			} else { // removing everything else
 				prevPrevNode = head;
 				while (prevPrevNode.getNext().getNext() != nextNode) {
 					prevPrevNode = prevPrevNode.getNext();
@@ -403,7 +403,7 @@ public class IUSingleLinkedList<T> implements IndexedUnsortedList<T> {
 				prevPrevNode.setNext(nextNode);
 
 			}
-			if (nextNode == null) {
+			if (nextNode == null) { // puts tail in the right spot
 				tail = prevPrevNode;
 			}
 
