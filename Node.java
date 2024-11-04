@@ -6,6 +6,7 @@
  */
 public class Node<E> {
 	private Node<E> next;
+	private Node<E> previous;
 	private E element;
 
 	/**
@@ -14,6 +15,25 @@ public class Node<E> {
 	public Node() {
 		next = null;
 		element = null;
+		previous = null;
+	}
+
+	/**
+ 	 * Returns the node that trails this one.
+  	 *
+  	 * @return the node that trails the current one
+  	 */
+	public Node<E> getPrevious() {
+		return previous;
+	}
+
+	/**
+ 	 * Sets the node that trails this one.
+ 	 *
+ 	 * @param node the node to be set to trail the current one
+ 	 */
+	public void setPrevious(Node<E> previous) {
+		this.previous = previous;
 	}
 
 	/**
@@ -23,6 +43,7 @@ public class Node<E> {
   	 *            the element to be stored within the new node
   	 */
 	public Node(E elem) {
+		previous = null;
 		next = null;
 		element = elem;
 	}
@@ -39,8 +60,7 @@ public class Node<E> {
 	/**
  	 * Sets the node that follows this one.
  	 *
- 	 * @param node
- 	 *            the node to be set to follow the current one
+ 	 * @param node the node to be set to follow the current one
  	 */
 	public void setNext(Node<E> node) {
 		next = node;
@@ -67,7 +87,7 @@ public class Node<E> {
 
 	@Override
 	public String toString() {
-		return "Element: " + element.toString() + " Has next: " + (next != null);
+		return "Element: " + element.toString() + " Has next: " + (next != null) + " Has previous: " + (previous != null);
 	}
 }
 
