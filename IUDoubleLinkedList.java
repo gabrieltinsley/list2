@@ -65,8 +65,26 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
 
     @Override
     public T removeFirst() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeFirst'");
+        if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		T retVal;
+
+		if (size() == 1) { // puts head and tail in the right place for a one element list
+			retVal = head.getElement();
+			head = tail = null;
+		} else { // removes everything else
+			Node<T> current = head;
+
+			retVal = current.getElement();
+			head = current.getNext();
+            head.setPrevious(null);
+		}
+
+		size--;
+		modCount++;
+
+		return retVal;
     }
 
     @Override
@@ -101,8 +119,19 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
 
     @Override
     public int indexOf(T element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'indexOf'");
+        Node<T> current = head;
+        int currentIndex = 0;
+
+        while (current != null && !current.getElement().equals(element)) {
+            current = current.getNext();
+            currentIndex++;
+        }
+
+        if(current == null) {
+            currentIndex = -1;
+        }
+
+        return currentIndex;
     }
 
     @Override
@@ -125,8 +154,7 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
 
     @Override
     public boolean contains(T target) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
+        return (indexOf(target) != -1);
     }
 
     @Override
@@ -159,8 +187,17 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
 
     @Override
     public String toString(){
-        // To DO
-        return null;
+        StringBuilder str = new StringBuilder();
+		str.append("[");
+		for (T element : this) {
+			str.append(element.toString());
+			str.append(", ");
+		}
+		if (size > 0) {
+			str.delete(str.length() - 2, str.length()); // remove trailing ", "
+		}
+		str.append("]");
+		return str.toString();
     }
 
 
