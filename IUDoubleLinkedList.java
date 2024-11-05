@@ -89,8 +89,26 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
 
     @Override
     public T removeLast() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeLast'");
+        if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		T retVal;
+
+		if (size() == 1) { // puts head and tail in the right place for a one element list
+			retVal = tail.getElement();
+			head = tail = null;
+		} else { // removes everything else
+			Node<T> current = tail;
+
+			retVal = current.getElement();
+			tail = current.getPrevious();
+            tail.setNext(null);
+		}
+
+		size--;
+		modCount++;
+
+		return retVal;
     }
 
     @Override
