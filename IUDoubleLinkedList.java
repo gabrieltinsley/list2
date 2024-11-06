@@ -68,14 +68,12 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
         newNode.setNext(current.getNext());
         if(current.getNext() != null) {
             current.getNext().setPrevious(newNode);
-        } else {
-            tail = newNode;
-        }
+        } 
         current.setNext(newNode);
         newNode.setPrevious(current);
 
         if(newNode.getNext() == null) {
-            tail = null;
+            tail = newNode;
         }
         size++;
         modCount++;
@@ -83,8 +81,35 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
 
     @Override
     public void add(int index, T element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+        if (index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+
+        if(index == 0) {
+            addToFront(element);
+        } else {
+            Node<T> current = head;
+
+            for(int i = 0; i < index; i++) {
+                current = current.getNext();
+            }
+
+            Node<T> newNode = new Node<T>(element);
+            newNode.setNext(current.getNext());
+            if(current.getNext() != null) {
+                current.getNext().setPrevious(newNode);
+            } 
+            current.setNext(newNode);
+            newNode.setPrevious(current);
+
+            if(newNode.getNext() == null) {
+                tail = newNode;
+            }
+    
+            size++;
+            modCount++;
+
+        }
     }
 
     @Override
@@ -149,14 +174,39 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
 
     @Override
     public void set(int index, T element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'set'");
+        if (index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException();
+		}
+
+		Node<T> current = head;
+
+		for (int i = 0; i < index; i++) { // finds index to change
+			current = current.getNext();
+		}
+
+		current.setElement(element);
+
+		modCount++;
     }
 
     @Override
     public T get(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+        if (index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException();
+		}
+		T retVal;
+		if (index == 0) { // first node
+			retVal = head.getElement();
+		} else { // somewhere in the middle
+			Node<T> current = head;
+			for (int i = 0; i < index; i++) {
+				current = current.getNext();
+			}
+
+			retVal = current.getElement();
+
+		}
+		return retVal;
     }
 
     @Override
