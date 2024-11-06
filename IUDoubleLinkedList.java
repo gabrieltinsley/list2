@@ -54,8 +54,31 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
 
     @Override
     public void addAfter(T element, T target) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addAfter'");
+        Node<T> current = head;
+
+        while(current != null && !current.getElement().equals(target)) {
+            current = current.getNext();
+        }
+
+        if(current == null) {
+            throw new NoSuchElementException();
+        }
+
+        Node<T> newNode = new Node<T>(element);
+        newNode.setNext(current.getNext());
+        if(current.getNext() != null) {
+            current.getNext().setPrevious(newNode);
+        } else {
+            tail = newNode;
+        }
+        current.setNext(newNode);
+        newNode.setPrevious(current);
+
+        if(newNode.getNext() == null) {
+            tail = null;
+        }
+        size++;
+        modCount++;
     }
 
     @Override
@@ -297,7 +320,7 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
             if (iterModCount != modCount) {
                 throw new ConcurrentModificationException();
             }
-            
+
             throw new UnsupportedOperationException("Unimplemented method 'remove'");
         }
 
