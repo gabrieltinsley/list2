@@ -781,6 +781,8 @@ public class ListTester {
 	}
 	private Scenario<Integer> ABC_iterRemoveAfterNextC_AB = () -> ABC_iterRemoveAfterNextC_AB();
 
+	// List Iterator Tests
+
 	/** Scenario: [A] -> iteratorAddBWithNewIterator -> [B,A] // Save for ListIterator
 	 * @return [B,A] after iteratorAddBWithNewIterator
 	 */
