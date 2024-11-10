@@ -173,20 +173,29 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
             current = current.getNext();
         }
 
-        T retVal = current.getElement();
+        if(current == null) {
+            throw new NoSuchElementException();
+        }
 
-        Node<T> tempP = current.getPrevious();
+        T retVal = null;
+
+        if(current != null) {
+            retVal = current.getElement();
+        }
+
         Node<T> tempN = current.getNext();
+        
+        Node<T> tempP = current.getPrevious();
 
         if (tempP != null) {
             tempP.setNext(tempN);
         } else {
-            head = head.getNext();
+            head = tempN;
         }
         if (tempN != null) {
             tempN.setPrevious(tempP);
         } else {
-            tail = tail.getPrevious();
+            tail = tempP;
         }
 
         size--;
