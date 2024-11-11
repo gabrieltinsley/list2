@@ -85,33 +85,36 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
             throw new IndexOutOfBoundsException();
         }
 
-        if (index == 0) {
+        if(index == 0) {
             addToFront(element);
-        } else {
+        } 
+        else if(index == size) {
+            addToRear(element);
+        }
+        else {
             Node<T> current = head;
 
-            for (int i = 0; i < index; i++) {
+            for(int i = 0; i < index - 1; i++) {
                 current = current.getNext();
             }
 
             Node<T> newNode = new Node<T>(element);
-            if (current.getNext() != null) {
-                newNode.setNext(current.getNext());
+            newNode.setNext(current.getNext());
+
+            if(current.getNext() != null) {
                 current.getNext().setPrevious(newNode);
-            } else {
-                newNode.setNext(null);
             }
+            
             current.setNext(newNode);
             newNode.setPrevious(current);
 
-            if (newNode.getNext() == null) {
+            if(newNode.getNext() == null) {
                 tail = newNode;
             }
 
             size++;
             modCount++;
-
-        }
+        } 
     }
 
     @Override
@@ -367,7 +370,6 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
         private Node<T> lastReturnedNode;
         private int nextIndex;
         private int iterModCount;
-        private boolean canRemove;
 
         /** Intialize iterator at the start of the list */
         public DLLIterator() {
@@ -425,8 +427,15 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
 
         @Override
         public T previous() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'previous'");
+            if(!hasPrevious()) {
+                throw new NoSuchElementException();
+            }
+
+            T retVal = nextNode.getElement();
+            lastReturnedNode = nextNode;
+            nextNode = nextNode.getPrevious();
+            nextIndex--;
+            return retVal;
         }
 
         @Override
