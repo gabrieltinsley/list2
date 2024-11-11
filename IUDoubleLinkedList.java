@@ -388,7 +388,7 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
 
             nextNode = head;
             for (int i = 0; i < startingIndex; i++) {
-                nextNode.getNext();
+                nextNode = nextNode.getNext();
             }
             nextIndex = startingIndex;
             iterModCount = modCount;
@@ -431,25 +431,35 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
                 throw new NoSuchElementException();
             }
 
+            T retVal;
             if(nextNode == null) {
                 nextNode = tail;
+                retVal = tail.getElement();
             } else {
-                nextNode = nextNode.getPrevious();
+                retVal = nextNode.getElement();
             }
-
-            T retVal = nextNode.getElement();
+            
             lastReturnedNode = nextNode;
+            nextNode = nextNode.getPrevious();
             nextIndex--;
             return retVal;
         }
 
         @Override
         public int nextIndex() {
+            if(iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+
             return nextIndex;
         }
 
         @Override
         public int previousIndex() {
+            if(iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+
             return nextIndex - 1;
         }
 
@@ -494,6 +504,9 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
             }
 
             lastReturnedNode.setElement(e);
+
+            iterModCount++;
+            modCount++;
         }
 
         @Override
@@ -514,8 +527,8 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
                 head = newNode;
             }
             else if (nextNode == null) {
-                tail.setNext(newNode);
                 newNode.setPrevious(tail);
+                tail.setNext(newNode);
                 tail = newNode;
             }
             else {
@@ -529,7 +542,6 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
             modCount++;
             iterModCount++;
             nextIndex++;
-            lastReturnedNode = null;
         }
 
     }
