@@ -364,6 +364,7 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
     /** ListIterator (and basic iterator) for IUDoubleLinkedList */
     private class DLLIterator implements ListIterator<T> {
         private Node<T> nextNode;
+        private Node<T> lastReturnedNode;
         private int nextIndex;
         private int iterModCount;
         private boolean canRemove;
@@ -389,6 +390,7 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
             }
             nextIndex = startingIndex;
             iterModCount = modCount;
+            lastReturnedNode = null;
         }
 
         @Override
@@ -406,6 +408,7 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
             }
 
             T retVal = nextNode.getElement();
+            lastReturnedNode = nextNode;
             nextNode = nextNode.getNext();
             nextIndex++;
             return retVal;
@@ -428,14 +431,12 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
 
         @Override
         public int nextIndex() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'nextIndex'");
+            return nextIndex;
         }
 
         @Override
         public int previousIndex() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'previousIndex'");
+            return nextIndex - 1;
         }
 
         @Override
@@ -443,8 +444,29 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
             if (iterModCount != modCount) {
                 throw new ConcurrentModificationException();
             }
-
-            throw new UnsupportedOperationException("Unimplemented method 'remove'");
+            if(lastReturnedNode == null) {
+                throw new IllegalStateException();
+            }
+            if(lastReturnedNode != head) {
+                lastReturnedNode.getPrevious().setNext(lastReturnedNode.getNext());
+            } else {
+                head = head.getNext();
+            }
+            if(lastReturnedNode != tail) {
+                lastReturnedNode.getNext().setPrevious(lastReturnedNode.getPrevious());
+            } else {
+                tail = tail.getPrevious();
+            }
+            if(lastReturnedNode != nextNode) {
+                nextIndex--;
+            } else {
+                nextNode = nextNode.getNext();
+            }
+            lastReturnedNode = null;
+            size--;
+            iterModCount++;
+            modCount++;
+            
         }
 
         @Override
