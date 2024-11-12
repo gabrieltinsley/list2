@@ -18,15 +18,16 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
     @Override
     public void addToFront(T element) {
         Node<T> newNode = new Node<T>(element);
-        if (head != null) {
+
+        if(!isEmpty()) {
             newNode.setNext(head);
             head.setPrevious(newNode);
-        }
-        head = newNode;
-
-        if (tail == null) {
+        } else {
             tail = newNode;
         }
+
+        head = newNode;
+
         size++;
         modCount++;
     }
@@ -385,11 +386,16 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
             if (startingIndex < 0 || startingIndex > size) {
                 throw new IndexOutOfBoundsException();
             }
-
+            
             nextNode = head;
-            for (int i = 0; i < startingIndex; i++) {
-                nextNode = nextNode.getNext();
-            }
+            // if(startingIndex == size) {
+            //     nextNode = null;
+            // } else {
+                nextNode = head;
+                for (int i = 0; i < startingIndex; i++) {
+                    nextNode = nextNode.getNext();
+                }
+            // }
             nextIndex = startingIndex;
             iterModCount = modCount;
             lastReturnedNode = null;
@@ -431,18 +437,17 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
                 throw new NoSuchElementException();
             }
 
-            T retVal;
-            if(nextNode == null) {
-                nextNode = tail;
-                retVal = tail.getElement();
+            if(nextNode != null) {
+                nextNode = nextNode.getPrevious();
             } else {
-                retVal = nextNode.getElement();
+                nextNode = tail;
             }
-            
+
             lastReturnedNode = nextNode;
-            nextNode = nextNode.getPrevious();
+
+
             nextIndex--;
-            return retVal;
+            return nextNode.getElement();
         }
 
         @Override
