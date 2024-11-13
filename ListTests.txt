@@ -1096,8 +1096,8 @@ including Iterator remove() method, add the following:
 including ListIterator with remove(), add(), and set() methods:
 50-55) same as Iterator remove() after next() scenarios above
 56)x [A] -> iterator remove() after previous() returns A -> []
-57) [A,B] -> iterator remove() after previous() returns A -> [B]
-58) [A,B] -> iterator remove() after previous() returns B -> [A]
+57)x [A,B] -> iterator remove() after previous() returns A -> [B]
+58)x [A,B] -> iterator remove() after previous() returns B -> [A]
 59) [A,B,C] -> iterator remove() after previous() returns A -> [B,C]
   Tests:
     addToFront(D) throws no Exceptions
