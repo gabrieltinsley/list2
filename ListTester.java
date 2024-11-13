@@ -186,7 +186,8 @@ public class ListTester {
 		testTwoElementList(A_addB_AB, "A_addB_AB", LIST_AB, STRING_AB);
 		testTwoElementList(A_add0B_BA, "A_add0B_BA", LIST_BA, STRING_BA);
 		testTwoElementList(A_add1B_AB, "A_add1B_AB", LIST_AB, STRING_AB);
-		// testTwoElementList(A_iterAddBWithNewIterator_BA,"A_iterAddBWithNewIterator_BA", LIST_BA, STRING_BA); // Save for ListIterator
+		testTwoElementList(A_listIterAddB_BA, "A_listIterAddB_BA", LIST_BA, STRING_BA); // list iterator
+		testTwoElementList(A_listIterIndex0NextAddB_AB, "A_listIterIndex0NextAddB_AB", LIST_AB, STRING_AB); // list iterator
 		//1-element to changed 1-element via set() @ADDED
 		testSingleElementList(A_set0_B, "A_set0_B", LIST_B, STRING_B);
 		//2-element to 1-element @ADDED
@@ -880,6 +881,28 @@ public class ListTester {
 	}
 	private Scenario<Integer> emptyList_listIterAddA_A = () -> emptyList_listIterAddA_A();
 
+	/** Scenario: [A] -> iterator add(B) after next() returns A -> [A,B]
+	 * @return [A,B] after iterator add(B) after next() returns A
+	 */
+	private IndexedUnsortedList<Integer> A_listIterIndex0NextAddB_AB() {
+		IndexedUnsortedList<Integer> list = emptyList_addToFrontA_A();
+		ListIterator<Integer> lit = list.listIterator();
+		lit.next();
+		lit.add(ELEMENT_B);
+		return list;
+	}
+	private Scenario<Integer> A_listIterIndex0NextAddB_AB = () -> A_listIterIndex0NextAddB_AB();
+
+	/** Scenario: [A] -> iterator add(B) with new iterator -> [B,A]
+	 * @return [B,A] after iterator add(B) with new iterator
+	 */
+	private IndexedUnsortedList<Integer> A_listIterAddB_BA() {
+		IndexedUnsortedList<Integer> list = emptyList_addToFrontA_A();
+		ListIterator<Integer> lit = list.listIterator();
+		lit.add(ELEMENT_B);
+		return list;
+	}
+	private Scenario<Integer> A_listIterAddB_BA = () -> A_listIterAddB_BA();
 
 
 
