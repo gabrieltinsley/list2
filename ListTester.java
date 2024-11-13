@@ -171,6 +171,7 @@ public class ListTester {
 		testSingleElementList(emptyList_addToRearA_A, "emptyList_addToRearA_A", LIST_A, STRING_A);
 		testSingleElementList(emptyList_addA_A, "emptyList_addA_A", LIST_A, STRING_A);
 		testSingleElementList(emptyList_addAtIndexZero_A, "emptyList_addAtIndexZero_A", LIST_A, STRING_A);
+		testSingleElementList(emptyList_listIterAddA_A, "emptyList_listIterAddA_A", LIST_A, STRING_A); // list iterator test
 		//1-element to empty list @ADDED
 		testEmptyList(A_removeFirst_emptyList, "A_removeFirst_emptyList");
 		testEmptyList(A_removeLast_emptyList, "A_removeLast_emptyList");
@@ -868,19 +869,16 @@ public class ListTester {
 	private Scenario<Integer> ABC_listIterIndex3PreviousRemoveC_AB = () -> ABC_listIterIndex3PreviousRemoveC_AB();
 
 
-	/** Scenario: [A] -> iteratorAddBWithNewIterator -> [B,A] // Save for ListIterator
-	 * @return [B,A] after iteratorAddBWithNewIterator
+	/** Scenario: [] -> iterator add(A) -> [A]
+	 * @return [A] after iterator add(A)
 	 */
-	// private IndexedUnsortedList<Integer> A_iterAddBWithNewIterator_BA() {
-	// 	IndexedUnsortedList<Integer> list = emptyList_addA_A();
-	// 	Iterator<Integer> it = list.iterator();
-	// 	it.next();
-	// 	Iterator<Integer> it2 = list.iterator();
-	// 	it2.hasNext();
-	// 	list.addToFront(ELEMENT_B);
-	// 	return list;
-	// }
-	// private Scenario<Integer> A_iterAddBWithNewIterator_BA = () -> A_iterAddBWithNewIterator_BA();
+	private IndexedUnsortedList<Integer> emptyList_listIterAddA_A() {
+		IndexedUnsortedList<Integer> list = newList();
+		ListIterator<Integer> lit = list.listIterator();
+		lit.add(ELEMENT_A);
+		return list;
+	}
+	private Scenario<Integer> emptyList_listIterAddA_A = () -> emptyList_listIterAddA_A();
 
 
 

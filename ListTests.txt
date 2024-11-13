@@ -1098,7 +1098,7 @@ including ListIterator with remove(), add(), and set() methods:
 56)x [A] -> iterator remove() after previous() returns A -> []
 57)x [A,B] -> iterator remove() after previous() returns A -> [B]
 58)x [A,B] -> iterator remove() after previous() returns B -> [A]
-59) [A,B,C] -> iterator remove() after previous() returns A -> [B,C]
+59)x [A,B,C] -> iterator remove() after previous() returns A -> [B,C]
   Tests:
     addToFront(D) throws no Exceptions
     addToRear(D) throws no Exceptions
@@ -1155,8 +1155,8 @@ including ListIterator with remove(), add(), and set() methods:
     listIterator() throws UnsupportedOperationException
     listIterator(0) throws UnsupportedOperationException
     toString() returns "[B, C]"
-60) [A,B,C] -> iterator remove() after previous() returns B -> [A,C]
-61) [A,B,C] -> iterator remove() after previous() returns C -> [A,B]
+60)x [A,B,C] -> iterator remove() after previous() returns B -> [A,C]
+61)x [A,B,C] -> iterator remove() after previous() returns C -> [A,B]
 62) [] -> iterator add(A) -> [A]
 63) [A] -> iterator add(B) with new iterator -> [B,A] @Later
   Tests:
