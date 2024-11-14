@@ -5,8 +5,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Double-linked node implementation of IndexedUnsortedList.
- * A List Iterator with working remove(), add(), set() methods
- * is working
+ * A List Iterator with working remove(), add(), set() methods.
  * 
  * @author Gabriel Tinsley
  * 
