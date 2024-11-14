@@ -191,6 +191,8 @@ public class ListTester {
 		testTwoElementList(A_listIterIndex1PreviousA_BA, "A_listIterIndex1PreviousA_BA", LIST_BA, STRING_BA); // list iterator
 		//1-element to changed 1-element via set() @ADDED
 		testSingleElementList(A_set0_B, "A_set0_B", LIST_B, STRING_B);
+		testSingleElementList(A_listIterIndex0NextSetB_B, "A_listIterIndex0NextSetB_B", LIST_B, STRING_B); // list iterator
+		testSingleElementList(A_listIterIndex1PreviousSetB_B, "A_listIterIndex1PreviousSetB_B", LIST_B, STRING_B); // list iterator
 		//2-element to 1-element @ADDED
 		testSingleElementList(AB_removeFirst_B, "AB_removeFirst_B", LIST_B, STRING_B);
 		testSingleElementList(AB_removeLast_A, "AB_removeLast_A", LIST_A, STRING_A);
@@ -219,6 +221,10 @@ public class ListTester {
 		//2-element to changed 2-element via set() @ADDED
 		testTwoElementList(AB_set0_CB, "AB_set0_CB", LIST_CB, STRING_CB);
 		testTwoElementList(AB_set1_AC, "AB_set1_AC", LIST_AC, STRING_AC);
+		testTwoElementList(AB_listIterIndex0NextSetC_CB, "AB_listIterIndex0NextSetC_CB", LIST_CB, STRING_CB); // list iterator
+		testTwoElementList(AB_listIterIndex1NextSetC_AC, "AB_listIterIndex1NextSetC_AC", LIST_AC, STRING_AC); // list iterator
+		testTwoElementList(AB_listIterIndex1PreviousSetC_CB, "AB_listIterIndex1PreviousSetC_CB", LIST_CB, STRING_CB); // list iterator
+		testTwoElementList(AB_listIterIndex2PreviousSetC_AC, "AB_listIterIndex2PreviousSetC_AC", LIST_AC, STRING_AC); // list iterator
 		//3-element to 2-element @ADDED
 		testTwoElementList(ABC_removeFirst_BC, "ABC_removeFirst_BC", LIST_BC, STRING_BC);
 		testTwoElementList(ABC_removeLast_AB, "ABC_removeLast_AB", LIST_AB, STRING_AB);
@@ -983,6 +989,78 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> AB_listIterIndex2PreviousAddC_ACB = () -> AB_listIterIndex2PreviousAddC_ACB();
+
+	/** Scenario: [A] -> iterator set(B) after next() returns A -> [B]
+	 * @return [B] after iterator set(B) after next() returns A
+	 */
+	private IndexedUnsortedList<Integer> A_listIterIndex0NextSetB_B() {
+		IndexedUnsortedList<Integer> list = emptyList_addToFrontA_A();
+		ListIterator<Integer> lit = list.listIterator();
+		lit.next();
+		lit.set(ELEMENT_B);
+		return list;
+	}
+	private Scenario<Integer> A_listIterIndex0NextSetB_B = () -> A_listIterIndex0NextSetB_B();
+
+	/** Scenario: [A] -> iterator set(B) after previous() returns A -> [B]
+	 * @return [B] after iterator set(B) after previous() returns A
+	 */
+	private IndexedUnsortedList<Integer> A_listIterIndex1PreviousSetB_B() {
+		IndexedUnsortedList<Integer> list = emptyList_addToFrontA_A();
+		ListIterator<Integer> lit = list.listIterator(1);
+		lit.previous();
+		lit.set(ELEMENT_B);
+		return list;
+	}
+	private Scenario<Integer> A_listIterIndex1PreviousSetB_B = () -> A_listIterIndex1PreviousSetB_B();
+
+	/** Scenario: [A,B] -> iterator set(C) after next() returns A -> [C,B]
+	 * @return [C,B] after iterator set(C) after next() returns A
+	 */
+	private IndexedUnsortedList<Integer> AB_listIterIndex0NextSetC_CB() {
+		IndexedUnsortedList<Integer> list = A_addToRearB_AB();
+		ListIterator<Integer> lit = list.listIterator();
+		lit.next();
+		lit.set(ELEMENT_C);
+		return list;
+	}
+	private Scenario<Integer> AB_listIterIndex0NextSetC_CB = () -> AB_listIterIndex0NextSetC_CB();
+
+	/** Scenario: [A,B] -> iterator set(C) after next() returns B -> [A,C]
+	 * @return [A,C] after iterator set(C) after next() returns B
+	 */
+	private IndexedUnsortedList<Integer> AB_listIterIndex1NextSetC_AC() {
+		IndexedUnsortedList<Integer> list = A_addToRearB_AB();
+		ListIterator<Integer> lit = list.listIterator(1);
+		lit.next();
+		lit.set(ELEMENT_C);
+		return list;
+	}
+	private Scenario<Integer> AB_listIterIndex1NextSetC_AC = () -> AB_listIterIndex1NextSetC_AC();
+
+	/** Scenario: [A,B] -> iterator set(C) after previous() returns A -> [C,B]
+	 * @return [C,B] after iterator set(C) after previous() returns A
+	 */
+	private IndexedUnsortedList<Integer> AB_listIterIndex1PreviousSetC_CB() {
+		IndexedUnsortedList<Integer> list = A_addToRearB_AB();
+		ListIterator<Integer> lit = list.listIterator(1);
+		lit.previous();
+		lit.set(ELEMENT_C);
+		return list;
+	}
+	private Scenario<Integer> AB_listIterIndex1PreviousSetC_CB = () -> AB_listIterIndex1PreviousSetC_CB();
+
+	/** Scenario: [A,B] -> iterator set(C) after previous() returns B -> [A,C]
+	 * @return [A,C] after iterator set(C) after previous() returns B
+	 */
+	private IndexedUnsortedList<Integer> AB_listIterIndex2PreviousSetC_AC() {
+		IndexedUnsortedList<Integer> list = A_addToRearB_AB();
+		ListIterator<Integer> lit = list.listIterator(2);
+		lit.previous();
+		lit.set(ELEMENT_C);
+		return list;
+	}
+	private Scenario<Integer> AB_listIterIndex2PreviousSetC_AC = () -> AB_listIterIndex2PreviousSetC_AC();
 
 
 
