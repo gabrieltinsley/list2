@@ -11,11 +11,6 @@ OVERVIEW:
 
 
 INCLUDED FILES:
-
- List the files required for the project with a brief
- explanation of why each is included.
-
- e.g.
  * IUDoubleLinkedList.java - source file
  * IndexedUnsortedList.java - source file
  * ListTester.java - source file
