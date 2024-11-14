@@ -244,6 +244,12 @@ public class ListTester {
 		testThreeElementList(ABC_set0_DBC, "ABC_set0_DBC", LIST_DBC, STRING_DBC);
 		testThreeElementList(ABC_set1_ADC, "ABC_set1_ADC", LIST_ADC, STRING_ADC);
 		testThreeElementList(ABC_set2_ABD, "ABC_set2_ABD", LIST_ABD, STRING_ABD);
+		testThreeElementList(ABC_listIterIndex0NextSetD_DBC, "ABC_listIterIndex0NextSetD_DBC", LIST_DBC, STRING_DBC); // list iterator
+		testThreeElementList(ABC_listIterIndex1NextSetD_ADC, "ABC_listIterIndex1NextSetD_ADC", LIST_ADC, STRING_ADC); // list iterator
+		testThreeElementList(ABC_listIterIndex2NextSetD_ABD, "ABC_listIterIndex2NextSetD_ABD", LIST_ABD, STRING_ABD); // list iterator
+		testThreeElementList(ABC_listIterIndex1PreviousSetD_DBC, "ABC_listIterIndex1PreviousSetD_DBC", LIST_DBC, STRING_DBC); // list iterator
+		testThreeElementList(ABC_listIterIndex2PreviousSetD_ADC, "ABC_listIterIndex2PreviousSetD_ADC", LIST_ADC, STRING_ADC); // list iterator
+		testThreeElementList(ABC_listIterIndex3PreviousSetD_ABD, "ABC_listIterIndex3PreviousSetD_ABD", LIST_ABD, STRING_ABD); // list iterator
 		//Iterator concurrency tests
 		test_IterConcurrency();
 		if (SUPPORTS_LIST_ITERATOR) {
@@ -1061,6 +1067,78 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> AB_listIterIndex2PreviousSetC_AC = () -> AB_listIterIndex2PreviousSetC_AC();
+
+	/** Scenario: [A,B,C] -> iterator set(D) after next() returns A -> [D,B,C]
+	 * @return [D,B,C] after iterator set(D) after next() returns A
+	 */
+	private IndexedUnsortedList<Integer> ABC_listIterIndex0NextSetD_DBC() {
+		IndexedUnsortedList<Integer> list = AB_addToRearC_ABC();
+		ListIterator<Integer> lit = list.listIterator();
+		lit.next();
+		lit.set(ELEMENT_D);
+		return list;
+	}
+	private Scenario<Integer> ABC_listIterIndex0NextSetD_DBC = () -> ABC_listIterIndex0NextSetD_DBC();
+
+	/** Scenario: [A,B,C] -> iterator set(D) after next() returns B -> [A,D,C]
+	 * @return [A,D,C] after iterator set(D) after next() returns B
+	 */
+	private IndexedUnsortedList<Integer> ABC_listIterIndex1NextSetD_ADC() {
+		IndexedUnsortedList<Integer> list = AB_addToRearC_ABC();
+		ListIterator<Integer> lit = list.listIterator(1);
+		lit.next();
+		lit.set(ELEMENT_D);
+		return list;
+	}
+	private Scenario<Integer> ABC_listIterIndex1NextSetD_ADC = () -> ABC_listIterIndex1NextSetD_ADC();
+
+	/** Scenario: [A,B,C] -> iterator set(D) after next() returns C -> [A,B,D]
+	 * @return [A,B,D] after iterator set(D) after next() returns C
+	 */
+	private IndexedUnsortedList<Integer> ABC_listIterIndex2NextSetD_ABD() {
+		IndexedUnsortedList<Integer> list = AB_addToRearC_ABC();
+		ListIterator<Integer> lit = list.listIterator(2);
+		lit.next();
+		lit.set(ELEMENT_D);
+		return list;
+	}
+	private Scenario<Integer> ABC_listIterIndex2NextSetD_ABD = () -> ABC_listIterIndex2NextSetD_ABD();
+
+	/** Scenario: [A,B,C] -> iterator set(D) after previous() returns A -> [D,B,C]
+	 * @return [D,B,C] after iterator set(D) after previous() returns A
+	 */
+	private IndexedUnsortedList<Integer> ABC_listIterIndex1PreviousSetD_DBC() {
+		IndexedUnsortedList<Integer> list = AB_addToRearC_ABC();
+		ListIterator<Integer> lit = list.listIterator(1);
+		lit.previous();
+		lit.set(ELEMENT_D);
+		return list;
+	}
+	private Scenario<Integer> ABC_listIterIndex1PreviousSetD_DBC = () -> ABC_listIterIndex1PreviousSetD_DBC();
+
+	/** Scenario: [A,B,C] -> iterator set(D) after previous() returns B -> [A,D,C]
+	 * @return [A,D,C] after iterator set(D) after previous() returns B
+	 */
+	private IndexedUnsortedList<Integer> ABC_listIterIndex2PreviousSetD_ADC() {
+		IndexedUnsortedList<Integer> list = AB_addToRearC_ABC();
+		ListIterator<Integer> lit = list.listIterator(2);
+		lit.previous();
+		lit.set(ELEMENT_D);
+		return list;
+	}
+	private Scenario<Integer> ABC_listIterIndex2PreviousSetD_ADC = () -> ABC_listIterIndex2PreviousSetD_ADC();
+
+	/** Scenario: [A,B,C] -> iterator set(D) after previous() returns C -> [A,B,D]
+	 * @return [A,B,D] after iterator set(D) after previous() returns C
+	 */
+	private IndexedUnsortedList<Integer> ABC_listIterIndex3PreviousSetD_ABD() {
+		IndexedUnsortedList<Integer> list = AB_addToRearC_ABC();
+		ListIterator<Integer> lit = list.listIterator(3);
+		lit.previous();
+		lit.set(ELEMENT_D);
+		return list;
+	}
+	private Scenario<Integer> ABC_listIterIndex3PreviousSetD_ABD = () -> ABC_listIterIndex3PreviousSetD_ABD();
 
 
 
