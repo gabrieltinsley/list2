@@ -1,96 +1,43 @@
 ****************
-* Double Linked List
+* Double-Linked List
 * CS 221-3
 * 11/14/2024
 * Gabriel Tinsley
-**************** 
+****************
 
 OVERVIEW:
- Double linked node implementaion of IndexedUnsortedList. A working list 
- Iterator with remove(), add(), and set() methods.
-
+The IUDoubleLinkedList is a node implementation of a doubly linked list with a fully functional ListIterator. This project supports basic list operations, bidirectional traversal, and list modifications through iterator methods like remove(), add(), and set().
 
 INCLUDED FILES:
- * IUDoubleLinkedList.java - source file
- * IndexedUnsortedList.java - source file
- * ListTester.java - source file
- * Node.java - source file
- * README - this file
-
+* IUDoubleLinkedList.java - source file
+* IndexedUnsortedList.java - source file
+* ListTester.java - source file
+* Node.java - source file
+* README - this file
 
 COMPILING AND RUNNING:
+From the directory containing all source files, compile the
+driver class (and all dependencies) with the command:
+$ javac ListTester.java
 
- Give the command for compiling the program, the command
- for running the program, and any usage instructions the
- user needs.
- 
- These are command-line instructions for a system like onyx.
- They have nothing to do with Eclipse or any other IDE. They
- must be specific - assume the user has Java installed, but
- has no idea how to compile or run a Java program from the
- command-line.
- 
- e.g.
- From the directory containing all source files, compile the
- driver class (and all dependencies) with the command:
- $ javac Class1.java
+Run the compiled class file with the command:
+$ java ListTester
 
- Run the compiled class file with the command:
- $ java Class1
-
- Console output will give the results after the program finishes.
-
+Console output will give the results of ListTester for IUDoubleLinkedList.
 
 PROGRAM DESIGN AND IMPORTANT CONCEPTS:
+The IUDoubleLinkedList is designed with efficiency in mind for operations such as insertion, deletion and traversal. The class supports bidirectional traversal and modifications through its nodes, each of which maintains references to both previous and next nodes.
 
- This is the sort of information someone who really wants to
- understand your program - possibly to make future enhancements -
- would want to know.
+The purpose of the Node class is to encapsulate a single element in the list and hold references to previous and next nodes. For IUDoubleLinkedList addToFront(), addToRear(), add(), removeFirst(), and removeLast() are all O(1) which makes the class more efficient than IUSingleLinkedList and IUArrayList.
 
- Explain the main concepts and organization of your program so that
- the reader can understand how your program works. This is not a repeat
- of javadoc comments or an exhaustive listing of all methods, but an
- explanation of the critical algorithms and object interactions that make
- up the program.
+Algorithms to understand are adding elements, removing elements and getting elements. Efficient adding is done by directly linking the new node to its surrounding neighbors or updating head and tail as needed. In cases such as empty lists, that is handled separately for consistency. Efficient removal is by adjusting neighbor node references and updating head or tail as needed. Finally getting is done by iterating through nodes. Index-based get starts at head and moves down the list until reaching the given index that is returned.
 
- Explain the main responsibilities of the classes and interfaces that make
- up the program. Explain how the classes work together to achieve the program
- goals. If there are critical algorithms that a user should understand, 
- explain them as well.
- 
- If you were responsible for designing the program's classes and choosing
- how they work together, why did you design the program this way? What, if 
- anything, could be improved? 
+The DLLIterator inner class implements ListIterator<T>, allowing for modifications of the list during iteration. Allows methods for moving next() and previous() through the list. Allows modifications like remove(), add(), and set() while keeping an IUDoubleLinkedList. Finally, keep track of modification count and iterator modification count to prevent concurrent modifications.
 
 TESTING:
-
- How did you test your program to be sure it works and meets all of the
- requirements? What was the testing strategy? What kinds of tests were run?
- Can your program handle bad input? Is your program  idiot-proof? How do you 
- know? What are the known issues / bugs remaining in your program?
-
+I tested IUDoubleLinkedList using the ListTester class, which performs extensive tests covering all possible change scenarios and ListIterator concurrency scenarios. This testing suite executes more than 11000 test cases, including tests for edge cases, boundary conditions, and stress scenarios to ensure completeness. When bad inputs are encountered, the class throws exceptions as expected. During testing, I identified and fixed several bugs, such as my get(int index) method returning null because I was moving to the wrong node. I resolved this issue by fixing my for-loop to go to index instead of index-1 because index-1 gets the wrong element, resulting in a stable implementation with no known remaining issues.
 
 DISCUSSION:
- 
- Discuss the issues you encountered during programming (development)
- and testing. What problems did you have? What did you have to research
- and learn on your own? What kinds of errors did you get? How did you 
- fix them?
- 
- What parts of the project did you find challenging? Is there anything
- that finally "clicked" for you in the process of working on this project?
- 
- 
-EXTRA CREDIT:
-
- If the project had opportunities for extra credit that you attempted,
- be sure to call it out so the grader does not overlook it.
-
+A recurring issue I encountered during programming was maintaining references to previous and next nodes. Drawing out every method and finding the special cases such as empty lists played a huge role in completing this project. The most challenging part of the project was remembering to update the previous node after adding or removing an element. Finally, the process of creating a node, setting the node's next reference then previous reference clicked.
 
 ----------------------------------------------------------------------------
-
-All content in a README file is expected to be written in clear English with
-proper grammar, spelling, and punctuation. If you are not a strong writer,
-be sure to get someone else to help you with proofreading. Consider all project
-documentation to be professional writing for your boss and/or potential
-customers.

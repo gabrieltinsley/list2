@@ -84,6 +84,7 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
         if (newNode.getNext() == null) { // puts tail in the right place
             tail = newNode;
         }
+        
         size++;
         modCount++;
     }
@@ -202,6 +203,7 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
         } else { // front of list
             head = tempN;
         }
+
         if (tempN != null) { // middle of list
             tempN.setPrevious(tempP);
         } else { // end of list
@@ -240,6 +242,7 @@ public class IUDoubleLinkedList<T> implements IndexedUnsortedList<T> {
             } else {
                 head = head.getNext();
             }
+
             if (tempN != null) {
                 tempN.setPrevious(tempP);
             } else {
