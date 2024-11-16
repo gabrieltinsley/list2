@@ -9,8 +9,8 @@ OVERVIEW:
 The IUDoubleLinkedList is a node implementation of a doubly linked list with a fully functional ListIterator. This project supports basic list operations, bidirectional traversal, and list modifications through iterator methods like remove(), add(), and set().
 
 INCLUDED FILES:
-* IUDoubleLinkedList.java - source file
 * IndexedUnsortedList.java - source file
+* IUDoubleLinkedList.java - source file
 * ListTester.java - source file
 * Node.java - source file
 * README - this file
